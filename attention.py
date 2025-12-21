@@ -44,7 +44,11 @@ class SAAProcessor(nn.Module):
             cross_attention_dim or hidden_size, hidden_size, bias=False
         )
 
-        self.id_num = (1,)
+        # ------------- FIX -------------
+        # self.id_num = (1,)
+        self.id_num = 1
+        # -------------------------------
+
         self.record_map = False
         self.activate_query = True
         self.bbox = None
