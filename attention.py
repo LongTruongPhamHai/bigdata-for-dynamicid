@@ -47,12 +47,17 @@ class SAAProcessor(nn.Module):
         # ------------- FIX -------------
         # self.id_num = (1,)
         self.id_num = 1
-        self.infer_end = 0  # tuỳ vào tham số đầu vào
         # -------------------------------
 
         self.record_map = False
         self.activate_query = True
-        self.bbox = None
+
+        # ------------- FIX -------------
+        # self.bbox = None
+        self.bbox = []
+        self.infer_end = 0  # tuỳ vào tham số đầu vào
+        # -------------------------------
+
         self.attn_maps = None
         self.root_img_width = None
         self.root_img_height = None
