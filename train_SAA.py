@@ -417,7 +417,11 @@ def main():
                 cross_attention_dim=cross_attention_dim,
                 num_tokens=args.num_tokens,
             )
-            attn_procs[name].load_state_dict(weights)
+            # ------------- FIX -------------
+            # attn_procs[name].load_state_dict(weights)
+            attn_procs[name].load_state_dict(weights, strict=False)
+            # -------------------------------
+
     unet.set_attn_processor(attn_procs)
     adapter_modules = torch.nn.ModuleList(unet.attn_processors.values())
 
