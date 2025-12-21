@@ -47,6 +47,7 @@ class SAAProcessor(nn.Module):
         # ------------- FIX -------------
         # self.id_num = (1,)
         self.id_num = 1
+        self.infer_end = 0  # tuỳ vào tham số đầu vào
         # -------------------------------
 
         self.record_map = False
