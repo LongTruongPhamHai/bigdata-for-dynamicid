@@ -579,7 +579,7 @@ def main():
                 save_path = os.path.join(args.output_dir, f"checkpoint-{global_step}")
                 accelerator.save_state(save_path)
 
-            begin = time.perf_counter()
+            # begin = time.perf_counter()
 
         # ------------ FIX ------------
         if accelerator.is_main_process:
