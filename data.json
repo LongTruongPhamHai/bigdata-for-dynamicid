@@ -1,0 +1,842 @@
+[
+  {
+    "image_file": "0/0001.jpg",
+    "text": "pouting lips, looking to the left"
+  },
+  {
+    "image_file": "0/0002.jpg",
+    "text": "gentle smile, looking downward"
+  },
+  {
+    "image_file": "0/0003.jpg",
+    "text": "wide-eyed, looking to the left"
+  },
+  {
+    "image_file": "0/0004.jpg",
+    "text": "angry expression, head slightly tilted"
+  },
+  {
+    "image_file": "0/0005.jpg",
+    "text": "calm expression, looking to the left"
+  },
+  {
+    "image_file": "0/0006.jpg",
+    "text": "wide-eyed, looking to the right"
+  },
+  {
+    "image_file": "0/0007.jpg",
+    "text": "serious face, facing forward"
+  },
+  {
+    "image_file": "0/0008.jpg",
+    "text": "serious face, chin down"
+  },
+  {
+    "image_file": "0/0009.jpg",
+    "text": "sad face, chin down"
+  },
+  {
+    "image_file": "0/0010.jpg",
+    "text": "neutral expression, head slightly tilted"
+  },
+  {
+    "image_file": "0/0011.jpg",
+    "text": "angry expression, side profile"
+  },
+  {
+    "image_file": "0/0012.jpg",
+    "text": "thoughtful look, chin down"
+  },
+  {
+    "image_file": "0/0013.jpg",
+    "text": "laughing, three-quarter view"
+  },
+  {
+    "image_file": "0/0014.jpg",
+    "text": "relaxed face, looking downward"
+  },
+  {
+    "image_file": "0/0015.jpg",
+    "text": "calm expression, chin down"
+  },
+  {
+    "image_file": "0/0016.jpg",
+    "text": "calm expression, chin up"
+  },
+  {
+    "image_file": "0/0017.jpg",
+    "text": "big grin, side profile"
+  },
+  {
+    "image_file": "0/0018.jpg",
+    "text": "surprised look, facing forward"
+  },
+  {
+    "image_file": "0/0019.jpg",
+    "text": "wide-eyed, side profile"
+  },
+  {
+    "image_file": "0/0020.jpg",
+    "text": "serious face, chin up"
+  },
+  {
+    "image_file": "0/0021.jpg",
+    "text": "angry expression, side profile"
+  },
+  {
+    "image_file": "0/0022.jpg",
+    "text": "neutral expression, looking downward"
+  },
+  {
+    "image_file": "0/0023.jpg",
+    "text": "pouting lips, chin up"
+  },
+  {
+    "image_file": "0/0024.jpg",
+    "text": "gentle smile, chin up"
+  },
+  {
+    "image_file": "0/0025.jpg",
+    "text": "eyes closed, facing forward"
+  },
+  {
+    "image_file": "0/0026.jpg",
+    "text": "smiling, three-quarter view"
+  },
+  {
+    "image_file": "0/0027.jpg",
+    "text": "angry expression, looking downward"
+  },
+  {
+    "image_file": "0/0028.jpg",
+    "text": "neutral expression, looking upward"
+  },
+  {
+    "image_file": "0/0029.jpg",
+    "text": "eyes closed, looking upward"
+  },
+  {
+    "image_file": "0/0030.jpg",
+    "text": "gentle smile, chin up"
+  },
+  {
+    "image_file": "0/0031.jpg",
+    "text": "sad face, facing forward"
+  },
+  {
+    "image_file": "0/0032.jpg",
+    "text": "serious face, three-quarter view"
+  },
+  {
+    "image_file": "0/0033.jpg",
+    "text": "smiling, looking downward"
+  },
+  {
+    "image_file": "0/0034.jpg",
+    "text": "surprised look, three-quarter view"
+  },
+  {
+    "image_file": "0/0035.jpg",
+    "text": "laughing, facing forward"
+  },
+  {
+    "image_file": "1/0001.jpg",
+    "text": "pouting lips, three-quarter view"
+  },
+  {
+    "image_file": "1/0002.jpg",
+    "text": "wide-eyed, looking upward"
+  },
+  {
+    "image_file": "1/0003.jpg",
+    "text": "neutral expression, three-quarter view"
+  },
+  {
+    "image_file": "1/0004.jpg",
+    "text": "surprised look, side profile"
+  },
+  {
+    "image_file": "1/0005.jpg",
+    "text": "eyes closed, looking to the left"
+  },
+  {
+    "image_file": "1/0006.jpg",
+    "text": "pouting lips, looking downward"
+  },
+  {
+    "image_file": "1/0007.jpg",
+    "text": "smiling, side profile"
+  },
+  {
+    "image_file": "1/0008.jpg",
+    "text": "calm expression, side profile"
+  },
+  {
+    "image_file": "1/0009.jpg",
+    "text": "pouting lips, looking to the left"
+  },
+  {
+    "image_file": "1/0010.jpg",
+    "text": "laughing, looking to the right"
+  },
+  {
+    "image_file": "1/0011.jpg",
+    "text": "serious face, looking to the right"
+  },
+  {
+    "image_file": "1/0012.jpg",
+    "text": "gentle smile, head slightly tilted"
+  },
+  {
+    "image_file": "1/0013.jpg",
+    "text": "relaxed face, head slightly tilted"
+  },
+  {
+    "image_file": "1/0014.jpg",
+    "text": "serious face, three-quarter view"
+  },
+  {
+    "image_file": "1/0015.jpg",
+    "text": "laughing, chin down"
+  },
+  {
+    "image_file": "1/0016.jpg",
+    "text": "relaxed face, head slightly tilted"
+  },
+  {
+    "image_file": "1/0017.jpg",
+    "text": "focused eyes, chin down"
+  },
+  {
+    "image_file": "1/0018.jpg",
+    "text": "neutral expression, looking downward"
+  },
+  {
+    "image_file": "1/0019.jpg",
+    "text": "relaxed face, chin down"
+  },
+  {
+    "image_file": "1/0020.jpg",
+    "text": "big grin, looking to the right"
+  },
+  {
+    "image_file": "1/0021.jpg",
+    "text": "wide-eyed, looking upward"
+  },
+  {
+    "image_file": "1/0022.jpg",
+    "text": "wide-eyed, head slightly tilted"
+  },
+  {
+    "image_file": "1/0023.jpg",
+    "text": "calm expression, looking to the left"
+  },
+  {
+    "image_file": "1/0024.jpg",
+    "text": "pouting lips, side profile"
+  },
+  {
+    "image_file": "1/0025.jpg",
+    "text": "pouting lips, chin up"
+  },
+  {
+    "image_file": "1/0026.jpg",
+    "text": "pouting lips, head slightly tilted"
+  },
+  {
+    "image_file": "1/0027.jpg",
+    "text": "sad face, looking to the right"
+  },
+  {
+    "image_file": "1/0028.jpg",
+    "text": "wide-eyed, looking downward"
+  },
+  {
+    "image_file": "1/0029.jpg",
+    "text": "surprised look, looking downward"
+  },
+  {
+    "image_file": "1/0030.jpg",
+    "text": "angry expression, looking upward"
+  },
+  {
+    "image_file": "1/0031.jpg",
+    "text": "laughing, looking upward"
+  },
+  {
+    "image_file": "1/0032.jpg",
+    "text": "calm expression, looking to the left"
+  },
+  {
+    "image_file": "1/0033.jpg",
+    "text": "wide-eyed, side profile"
+  },
+  {
+    "image_file": "1/0034.jpg",
+    "text": "focused eyes, looking to the left"
+  },
+  {
+    "image_file": "1/0035.jpg",
+    "text": "angry expression, looking to the left"
+  },
+  {
+    "image_file": "2/0001.jpg",
+    "text": "sad face, chin up"
+  },
+  {
+    "image_file": "2/0002.jpg",
+    "text": "sad face, looking to the left"
+  },
+  {
+    "image_file": "2/0003.jpg",
+    "text": "angry expression, three-quarter view"
+  },
+  {
+    "image_file": "2/0004.jpg",
+    "text": "eyes closed, looking upward"
+  },
+  {
+    "image_file": "2/0005.jpg",
+    "text": "big grin, chin up"
+  },
+  {
+    "image_file": "2/0006.jpg",
+    "text": "pouting lips, looking upward"
+  },
+  {
+    "image_file": "2/0007.jpg",
+    "text": "smiling, looking to the right"
+  },
+  {
+    "image_file": "2/0008.jpg",
+    "text": "sad face, looking to the right"
+  },
+  {
+    "image_file": "2/0009.jpg",
+    "text": "gentle smile, looking downward"
+  },
+  {
+    "image_file": "2/0010.jpg",
+    "text": "pouting lips, head slightly tilted"
+  },
+  {
+    "image_file": "2/0011.jpg",
+    "text": "thoughtful look, chin down"
+  },
+  {
+    "image_file": "2/0012.jpg",
+    "text": "calm expression, head slightly tilted"
+  },
+  {
+    "image_file": "2/0013.jpg",
+    "text": "focused eyes, head slightly tilted"
+  },
+  {
+    "image_file": "2/0014.jpg",
+    "text": "big grin, facing forward"
+  },
+  {
+    "image_file": "2/0015.jpg",
+    "text": "calm expression, side profile"
+  },
+  {
+    "image_file": "2/0016.jpg",
+    "text": "surprised look, side profile"
+  },
+  {
+    "image_file": "2/0017.jpg",
+    "text": "surprised look, facing forward"
+  },
+  {
+    "image_file": "2/0018.jpg",
+    "text": "serious face, chin up"
+  },
+  {
+    "image_file": "2/0019.jpg",
+    "text": "focused eyes, looking upward"
+  },
+  {
+    "image_file": "2/0020.jpg",
+    "text": "smiling, side profile"
+  },
+  {
+    "image_file": "2/0021.jpg",
+    "text": "focused eyes, chin down"
+  },
+  {
+    "image_file": "2/0022.jpg",
+    "text": "surprised look, head slightly tilted"
+  },
+  {
+    "image_file": "2/0023.jpg",
+    "text": "wide-eyed, looking to the right"
+  },
+  {
+    "image_file": "2/0024.jpg",
+    "text": "big grin, facing forward"
+  },
+  {
+    "image_file": "2/0025.jpg",
+    "text": "wide-eyed, looking to the left"
+  },
+  {
+    "image_file": "2/0026.jpg",
+    "text": "calm expression, side profile"
+  },
+  {
+    "image_file": "2/0027.jpg",
+    "text": "relaxed face, chin down"
+  },
+  {
+    "image_file": "2/0028.jpg",
+    "text": "relaxed face, facing forward"
+  },
+  {
+    "image_file": "2/0029.jpg",
+    "text": "thoughtful look, facing forward"
+  },
+  {
+    "image_file": "2/0030.jpg",
+    "text": "sad face, facing forward"
+  },
+  {
+    "image_file": "2/0031.jpg",
+    "text": "thoughtful look, looking downward"
+  },
+  {
+    "image_file": "2/0032.jpg",
+    "text": "neutral expression, facing forward"
+  },
+  {
+    "image_file": "2/0033.jpg",
+    "text": "calm expression, side profile"
+  },
+  {
+    "image_file": "2/0034.jpg",
+    "text": "laughing, looking downward"
+  },
+  {
+    "image_file": "2/0035.jpg",
+    "text": "surprised look, looking to the right"
+  },
+  {
+    "image_file": "3/0001.jpg",
+    "text": "thoughtful look, looking to the right"
+  },
+  {
+    "image_file": "3/0002.jpg",
+    "text": "wide-eyed, head slightly tilted"
+  },
+  {
+    "image_file": "3/0003.jpg",
+    "text": "sad face, looking upward"
+  },
+  {
+    "image_file": "3/0004.jpg",
+    "text": "eyes closed, looking to the left"
+  },
+  {
+    "image_file": "3/0005.jpg",
+    "text": "laughing, chin up"
+  },
+  {
+    "image_file": "3/0006.jpg",
+    "text": "laughing, three-quarter view"
+  },
+  {
+    "image_file": "3/0007.jpg",
+    "text": "gentle smile, three-quarter view"
+  },
+  {
+    "image_file": "3/0008.jpg",
+    "text": "thoughtful look, chin down"
+  },
+  {
+    "image_file": "3/0009.jpg",
+    "text": "wide-eyed, looking upward"
+  },
+  {
+    "image_file": "3/0010.jpg",
+    "text": "gentle smile, looking to the left"
+  },
+  {
+    "image_file": "3/0011.jpg",
+    "text": "relaxed face, head slightly tilted"
+  },
+  {
+    "image_file": "3/0012.jpg",
+    "text": "pouting lips, side profile"
+  },
+  {
+    "image_file": "3/0013.jpg",
+    "text": "gentle smile, looking to the left"
+  },
+  {
+    "image_file": "3/0014.jpg",
+    "text": "neutral expression, looking upward"
+  },
+  {
+    "image_file": "3/0015.jpg",
+    "text": "pouting lips, chin down"
+  },
+  {
+    "image_file": "3/0016.jpg",
+    "text": "angry expression, chin down"
+  },
+  {
+    "image_file": "3/0017.jpg",
+    "text": "neutral expression, looking upward"
+  },
+  {
+    "image_file": "3/0018.jpg",
+    "text": "angry expression, looking upward"
+  },
+  {
+    "image_file": "3/0019.jpg",
+    "text": "big grin, looking downward"
+  },
+  {
+    "image_file": "3/0020.jpg",
+    "text": "wide-eyed, head slightly tilted"
+  },
+  {
+    "image_file": "3/0021.jpg",
+    "text": "serious face, three-quarter view"
+  },
+  {
+    "image_file": "3/0022.jpg",
+    "text": "sad face, side profile"
+  },
+  {
+    "image_file": "3/0023.jpg",
+    "text": "smiling, side profile"
+  },
+  {
+    "image_file": "3/0024.jpg",
+    "text": "gentle smile, looking to the left"
+  },
+  {
+    "image_file": "3/0025.jpg",
+    "text": "thoughtful look, chin up"
+  },
+  {
+    "image_file": "3/0026.jpg",
+    "text": "relaxed face, facing forward"
+  },
+  {
+    "image_file": "3/0027.jpg",
+    "text": "serious face, looking to the right"
+  },
+  {
+    "image_file": "3/0028.jpg",
+    "text": "neutral expression, head slightly tilted"
+  },
+  {
+    "image_file": "3/0029.jpg",
+    "text": "pouting lips, chin down"
+  },
+  {
+    "image_file": "3/0030.jpg",
+    "text": "gentle smile, looking downward"
+  },
+  {
+    "image_file": "3/0031.jpg",
+    "text": "angry expression, facing forward"
+  },
+  {
+    "image_file": "3/0032.jpg",
+    "text": "focused eyes, looking to the left"
+  },
+  {
+    "image_file": "3/0033.jpg",
+    "text": "eyes closed, head slightly tilted"
+  },
+  {
+    "image_file": "3/0034.jpg",
+    "text": "thoughtful look, facing forward"
+  },
+  {
+    "image_file": "3/0035.jpg",
+    "text": "angry expression, looking upward"
+  },
+  {
+    "image_file": "4/0001.jpg",
+    "text": "serious face, looking upward"
+  },
+  {
+    "image_file": "4/0002.jpg",
+    "text": "neutral expression, chin up"
+  },
+  {
+    "image_file": "4/0003.jpg",
+    "text": "pouting lips, three-quarter view"
+  },
+  {
+    "image_file": "4/0004.jpg",
+    "text": "laughing, three-quarter view"
+  },
+  {
+    "image_file": "4/0005.jpg",
+    "text": "relaxed face, chin down"
+  },
+  {
+    "image_file": "4/0006.jpg",
+    "text": "calm expression, looking to the left"
+  },
+  {
+    "image_file": "4/0007.jpg",
+    "text": "laughing, looking downward"
+  },
+  {
+    "image_file": "4/0008.jpg",
+    "text": "focused eyes, looking to the right"
+  },
+  {
+    "image_file": "4/0009.jpg",
+    "text": "relaxed face, three-quarter view"
+  },
+  {
+    "image_file": "4/0010.jpg",
+    "text": "relaxed face, looking to the left"
+  },
+  {
+    "image_file": "4/0011.jpg",
+    "text": "pouting lips, three-quarter view"
+  },
+  {
+    "image_file": "4/0012.jpg",
+    "text": "big grin, chin down"
+  },
+  {
+    "image_file": "4/0013.jpg",
+    "text": "relaxed face, three-quarter view"
+  },
+  {
+    "image_file": "4/0014.jpg",
+    "text": "gentle smile, looking downward"
+  },
+  {
+    "image_file": "4/0015.jpg",
+    "text": "serious face, facing forward"
+  },
+  {
+    "image_file": "4/0016.jpg",
+    "text": "focused eyes, three-quarter view"
+  },
+  {
+    "image_file": "4/0017.jpg",
+    "text": "calm expression, looking downward"
+  },
+  {
+    "image_file": "4/0018.jpg",
+    "text": "angry expression, three-quarter view"
+  },
+  {
+    "image_file": "4/0019.jpg",
+    "text": "eyes closed, chin down"
+  },
+  {
+    "image_file": "4/0020.jpg",
+    "text": "thoughtful look, looking to the left"
+  },
+  {
+    "image_file": "4/0021.jpg",
+    "text": "laughing, looking to the right"
+  },
+  {
+    "image_file": "4/0022.jpg",
+    "text": "sad face, chin up"
+  },
+  {
+    "image_file": "4/0023.jpg",
+    "text": "smiling, looking upward"
+  },
+  {
+    "image_file": "4/0024.jpg",
+    "text": "sad face, chin up"
+  },
+  {
+    "image_file": "4/0025.jpg",
+    "text": "focused eyes, looking to the right"
+  },
+  {
+    "image_file": "4/0026.jpg",
+    "text": "serious face, looking downward"
+  },
+  {
+    "image_file": "4/0027.jpg",
+    "text": "calm expression, looking upward"
+  },
+  {
+    "image_file": "4/0028.jpg",
+    "text": "smiling, side profile"
+  },
+  {
+    "image_file": "4/0029.jpg",
+    "text": "pouting lips, looking to the left"
+  },
+  {
+    "image_file": "4/0030.jpg",
+    "text": "pouting lips, looking to the right"
+  },
+  {
+    "image_file": "4/0031.jpg",
+    "text": "thoughtful look, looking to the right"
+  },
+  {
+    "image_file": "4/0032.jpg",
+    "text": "pouting lips, looking downward"
+  },
+  {
+    "image_file": "4/0033.jpg",
+    "text": "sad face, facing forward"
+  },
+  {
+    "image_file": "4/0034.jpg",
+    "text": "laughing, side profile"
+  },
+  {
+    "image_file": "4/0035.jpg",
+    "text": "eyes closed, three-quarter view"
+  },
+  {
+    "image_file": "5/0001.jpg",
+    "text": "sad face, chin down"
+  },
+  {
+    "image_file": "5/0002.jpg",
+    "text": "thoughtful look, head slightly tilted"
+  },
+  {
+    "image_file": "5/0003.jpg",
+    "text": "eyes closed, chin down"
+  },
+  {
+    "image_file": "5/0004.jpg",
+    "text": "sad face, chin up"
+  },
+  {
+    "image_file": "5/0005.jpg",
+    "text": "big grin, looking upward"
+  },
+  {
+    "image_file": "5/0006.jpg",
+    "text": "surprised look, looking downward"
+  },
+  {
+    "image_file": "5/0007.jpg",
+    "text": "angry expression, head slightly tilted"
+  },
+  {
+    "image_file": "5/0008.jpg",
+    "text": "smiling, facing forward"
+  },
+  {
+    "image_file": "5/0009.jpg",
+    "text": "smiling, three-quarter view"
+  },
+  {
+    "image_file": "5/0010.jpg",
+    "text": "thoughtful look, three-quarter view"
+  },
+  {
+    "image_file": "5/0011.jpg",
+    "text": "smiling, facing forward"
+  },
+  {
+    "image_file": "5/0012.jpg",
+    "text": "smiling, chin down"
+  },
+  {
+    "image_file": "5/0013.jpg",
+    "text": "smiling, looking downward"
+  },
+  {
+    "image_file": "5/0014.jpg",
+    "text": "smiling, facing forward"
+  },
+  {
+    "image_file": "5/0015.jpg",
+    "text": "laughing, chin down"
+  },
+  {
+    "image_file": "5/0016.jpg",
+    "text": "laughing, looking downward"
+  },
+  {
+    "image_file": "5/0017.jpg",
+    "text": "focused eyes, chin down"
+  },
+  {
+    "image_file": "5/0018.jpg",
+    "text": "focused eyes, head slightly tilted"
+  },
+  {
+    "image_file": "5/0019.jpg",
+    "text": "gentle smile, looking to the right"
+  },
+  {
+    "image_file": "5/0020.jpg",
+    "text": "sad face, head slightly tilted"
+  },
+  {
+    "image_file": "5/0021.jpg",
+    "text": "eyes closed, three-quarter view"
+  },
+  {
+    "image_file": "5/0022.jpg",
+    "text": "smiling, facing forward"
+  },
+  {
+    "image_file": "5/0023.jpg",
+    "text": "gentle smile, looking downward"
+  },
+  {
+    "image_file": "5/0024.jpg",
+    "text": "laughing, head slightly tilted"
+  },
+  {
+    "image_file": "5/0025.jpg",
+    "text": "smiling, looking downward"
+  },
+  {
+    "image_file": "5/0026.jpg",
+    "text": "eyes closed, looking upward"
+  },
+  {
+    "image_file": "5/0027.jpg",
+    "text": "surprised look, looking to the left"
+  },
+  {
+    "image_file": "5/0028.jpg",
+    "text": "sad face, chin up"
+  },
+  {
+    "image_file": "5/0029.jpg",
+    "text": "relaxed face, side profile"
+  },
+  {
+    "image_file": "5/0030.jpg",
+    "text": "angry expression, chin down"
+  },
+  {
+    "image_file": "5/0031.jpg",
+    "text": "smiling, chin down"
+  },
+  {
+    "image_file": "5/0032.jpg",
+    "text": "smiling, looking downward"
+  },
+  {
+    "image_file": "5/0033.jpg",
+    "text": "neutral expression, chin up"
+  },
+  {
+    "image_file": "5/0034.jpg",
+    "text": "smiling, chin down"
+  },
+  {
+    "image_file": "5/0035.jpg",
+    "text": "serious face, looking upward"
+  }
+]
