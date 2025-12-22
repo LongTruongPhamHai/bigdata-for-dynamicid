@@ -473,6 +473,10 @@ def main():
         ip_adapter, optimizer, train_dataloader
     )
 
+    # ------------ FIX ------------
+    best_loss = float("inf")
+    # -----------------------------
+
     global_step = 0
     for epoch in range(0, args.num_train_epochs):
         begin = time.perf_counter()
@@ -582,6 +586,12 @@ def main():
             # begin = time.perf_counter()
 
         # ------------ FIX ------------
+        avg_epoch_loss = epoch_loss / epoch_steps
+        epoch_time = time.perf_counter() - begin
+
+        if avg_epoch_loss < best_loss:
+            best_loss = avg_epoch_loss
+
         if accelerator.is_main_process:
             avg_epoch_loss = epoch_loss / epoch_steps
             print(
