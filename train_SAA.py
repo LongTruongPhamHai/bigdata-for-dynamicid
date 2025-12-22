@@ -476,7 +476,14 @@ def main():
     global_step = 0
     for epoch in range(0, args.num_train_epochs):
         begin = time.perf_counter()
+
+        # ------------ FIX ------------
+        epoch_loss = 0.0
+        epoch_steps = 0
+        # -----------------------------
+
         for step, batch in enumerate(train_dataloader):
+
             load_data_time = time.perf_counter() - begin
             with accelerator.accumulate(ip_adapter):
                 # Convert images to latent space
@@ -533,7 +540,8 @@ def main():
                 # avg_loss = (
                 #     accelerator.gather(loss.repeat(args.train_batch_size)).mean().item()
                 # )
-                avg_loss = loss.item()
+                epoch_loss += loss.item()
+                epoch_steps += 1
                 # -----------------------------
 
                 # Backpropagate
@@ -553,16 +561,16 @@ def main():
                 #         )
                 #     )
 
-                if accelerator.is_main_process and step % 5 == 0:
-                    print(
-                        "Epoch {}, step {}, data_time: {:.4f}, time: {:.4f}, step_loss: {:.6f}".format(
-                            epoch,
-                            step,
-                            load_data_time,
-                            time.perf_counter() - begin,
-                            avg_loss,
-                        )
-                    )
+                # if accelerator.is_main_process and step % 5 == 0:
+                #     print(
+                #         "Epoch {}, step {}, data_time: {:.4f}, time: {:.4f}, step_loss: {:.6f}".format(
+                #             epoch,
+                #             step,
+                #             load_data_time,
+                #             time.perf_counter() - begin,
+                #             avg_loss,
+                #         )
+                #     )
                 # -----------------------------
 
             global_step += 1
@@ -572,6 +580,16 @@ def main():
                 accelerator.save_state(save_path)
 
             begin = time.perf_counter()
+
+        # ------------ FIX ------------
+        if accelerator.is_main_process:
+            avg_epoch_loss = epoch_loss / epoch_steps
+            print(
+                f"[Epoch {epoch}] "
+                f"avg_loss = {avg_epoch_loss:.6f} | "
+                f"time = {time.perf_counter() - begin:.2f}s"
+            )
+        # -----------------------------
 
 
 if __name__ == "__main__":
