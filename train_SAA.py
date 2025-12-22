@@ -597,7 +597,8 @@ def main():
             print(
                 f"[Epoch {epoch}] "
                 f"avg_loss = {avg_epoch_loss:.6f} | "
-                f"time = {time.perf_counter() - begin:.2f}s"
+                f"best_loss = {best_loss:.6f} | "
+                f"time = {epoch_time:.3f}s"
             )
         # -----------------------------
 
