@@ -528,19 +528,34 @@ def main():
 
                 loss = F.mse_loss(noise_pred.float(), noise.float(), reduction="mean")
 
+                # ------------ FIX ------------
                 # Gather the losses across all processes for logging (if we use distributed training).
-                avg_loss = (
-                    accelerator.gather(loss.repeat(args.train_batch_size)).mean().item()
-                )
+                # avg_loss = (
+                #     accelerator.gather(loss.repeat(args.train_batch_size)).mean().item()
+                # )
+                avg_loss = loss.item()
+                # -----------------------------
 
                 # Backpropagate
                 accelerator.backward(loss)
                 optimizer.step()
                 optimizer.zero_grad()
 
-                if accelerator.is_main_process:
+                # ------------ FIX ------------
+                # if accelerator.is_main_process:
+                #     print(
+                #         "Epoch {}, step {}, data_time: {}, time: {}, step_loss: {}".format(
+                #             epoch,
+                #             step,
+                #             load_data_time,
+                #             time.perf_counter() - begin,
+                #             avg_loss,
+                #         )
+                #     )
+
+                if accelerator.is_main_process and step % 5 == 0:
                     print(
-                        "Epoch {}, step {}, data_time: {}, time: {}, step_loss: {}".format(
+                        "Epoch {}, step {}, data_time: {:.4f}, time: {:.4f}, step_loss: {:.6f}".format(
                             epoch,
                             step,
                             load_data_time,
@@ -548,6 +563,7 @@ def main():
                             avg_loss,
                         )
                     )
+                # -----------------------------
 
             global_step += 1
 
