@@ -10,7 +10,10 @@ device = "cuda"
 base_model_path = "SG161222/Realistic_Vision_V6.0_B1_noVAE"
 # -------------------------------
 
-SAA_path = "./models/SAA.bin"
+# ------------- FIX -------------
+# SAA_path = "./models/SAA.bin"
+SAA_path = "/kaggle/working/bigdata-for-dynamicid/models/SAA.bin"
+# -------------------------------
 
 pipe = DynamicIDStableDiffusionPipeline.from_pretrained(
     base_model_path,
