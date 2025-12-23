@@ -19,7 +19,11 @@ pipe = DynamicIDStableDiffusionPipeline.from_pretrained(
 
 pipe.load_DynamicID(SAA_path)
 
-root_path = "./dataset/base_image_dataset"
+# ------------- FIX -------------
+# root_path = "./dataset/base_image_dataset"
+root_path = "/kaggle/input/dataset-for-dynamicid/dataset/base_image_dataset"
+# -------------------------------
+
 num = len(os.listdir(root_path))
 for i in range(num):
     person_path = os.path.join(root_path, str(i))
