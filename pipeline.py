@@ -121,9 +121,32 @@ class DynamicIDStableDiffusionPipeline(StableDiffusionPipeline):
             state_dict = pretrained_model_name_or_path_or_dict
         # -------------------------------
 
-        self.image_proj_model.load_state_dict(state_dict["proj_module"], strict=True)
+        # ------------- FIX -------------
+        # self.image_proj_model.load_state_dict(state_dict["proj_module"], strict=True)
+        # ip_layers = torch.nn.ModuleList(self.unet.attn_processors.values())
+        # ip_layers.load_state_dict(state_dict["SAA_module"], strict=True)
+        if "proj_module" in state_dict:
+            self.image_proj_model.load_state_dict(
+                state_dict["proj_module"], strict=True
+            )
+            print("✅ Loaded proj_module")
+        else:
+            print("⚠️ No proj_module found, skip image projection (LoRA-only SAA)")
+
         ip_layers = torch.nn.ModuleList(self.unet.attn_processors.values())
-        ip_layers.load_state_dict(state_dict["SAA_module"], strict=True)
+
+        if "SAA_module" in state_dict:
+            # DynamicID / InstantID style
+            ip_layers.load_state_dict(state_dict["SAA_module"], strict=True)
+            print("✅ Loaded SAA_module")
+        else:
+            # LoRA-only checkpoint
+            missing, unexpected = ip_layers.load_state_dict(state_dict, strict=False)
+            print("✅ Loaded LoRA-only SAA")
+            print("Missing keys:", len(missing))
+            print("Unexpected keys:", len(unexpected))
+
+        # -------------------------------
 
         if IMR_path is not None:
             self.IMR = IMR(erase_layer_num=IMR_depth, drive_layer_num=IMR_depth).to(
