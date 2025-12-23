@@ -77,23 +77,47 @@ class DynamicIDStableDiffusionPipeline(StableDiffusionPipeline):
             "file_type": "attn_procs_weights",
             "framework": "pytorch",
         }
+        # ------------- FIX -------------
+        # if not isinstance(pretrained_model_name_or_path_or_dict, dict):
+        #     model_file = _get_model_file(
+        #         pretrained_model_name_or_path_or_dict,
+        #         weights_name=SAA_path,
+        #         cache_dir=cache_dir,
+        #         force_download=force_download,
+        #         proxies=proxies,
+        #         local_files_only=local_files_only,
+        #         use_auth_token=token,
+        #         revision=revision,
+        #         subfolder=subfolder,
+        #         user_agent=user_agent,
+        #     )
+        #     state_dict = torch.load(model_file, map_location="cpu")
+        # else:
+        #     state_dict = pretrained_model_name_or_path_or_dict
 
         if not isinstance(pretrained_model_name_or_path_or_dict, dict):
-            model_file = _get_model_file(
-                pretrained_model_name_or_path_or_dict,
-                weights_name=SAA_path,
-                cache_dir=cache_dir,
-                force_download=force_download,
-                proxies=proxies,
-                local_files_only=local_files_only,
-                use_auth_token=token,
-                revision=revision,
-                subfolder=subfolder,
-                user_agent=user_agent,
-            )
+
+            if isinstance(SAA_path, str) and os.path.isfile(SAA_path):
+                model_file = SAA_path
+            else:
+                model_file = _get_model_file(
+                    pretrained_model_name_or_path_or_dict,
+                    weights_name=SAA_path,
+                    cache_dir=cache_dir,
+                    force_download=force_download,
+                    proxies=proxies,
+                    local_files_only=local_files_only,
+                    use_auth_token=token,
+                    revision=revision,
+                    subfolder=subfolder,
+                    user_agent=user_agent,
+                )
+
             state_dict = torch.load(model_file, map_location="cpu")
+
         else:
             state_dict = pretrained_model_name_or_path_or_dict
+        # -------------------------------
 
         self.image_proj_model.load_state_dict(state_dict["proj_module"], strict=True)
         ip_layers = torch.nn.ModuleList(self.unet.attn_processors.values())
