@@ -19,7 +19,9 @@ pipe = DynamicIDStableDiffusionPipeline.from_pretrained(
 
 # ------------- FIX -------------
 # pipe.load_DynamicID(SAA_path)
-pipe.load_DynamicID(base_model_path, SAA_path)
+# pipe.load_DynamicID(base_model_path, SAA_path)
+pipe.load_DynamicID(base_model_path, SAA_path, IMR_path=None)
+
 # -------------------------------
 
 # ------------- FIX -------------
