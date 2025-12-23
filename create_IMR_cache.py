@@ -17,7 +17,10 @@ pipe = DynamicIDStableDiffusionPipeline.from_pretrained(
     torch_dtype=torch.float16,
 ).to(device)
 
-pipe.load_DynamicID(SAA_path)
+# ------------- FIX -------------
+# pipe.load_DynamicID(SAA_path)
+pipe.load_DynamicID(base_model_path, SAA_path)
+# -------------------------------
 
 # ------------- FIX -------------
 # root_path = "./dataset/base_image_dataset"
