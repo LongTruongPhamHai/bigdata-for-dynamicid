@@ -36,7 +36,14 @@ for i in range(num):
     person_path = os.path.join(root_path, str(i))
     image_path = sorted(os.listdir(person_path))
 
-    save_path = person_path.replace("base_image_dataset", "cache")
+    # ------------- FIX -------------
+    # save_path = person_path.replace("base_image_dataset", "cache")
+    save_path = person_path.replace(
+        "/kaggle/input/dataset-for-dynamicid/dataset/base_image_dataset",
+        "/kaggle/working/cache",
+    )
+    # -------------------------------
+
     os.makedirs(save_path, exist_ok=True)
 
     for path in image_path:
