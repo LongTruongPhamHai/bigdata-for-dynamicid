@@ -2,6 +2,15 @@ import torch
 import os
 from pipeline import DynamicIDStableDiffusionPipeline
 from diffusers.utils import load_image
+from insightface.app import FaceAnalysis
+import torch
+import numpy as np
+
+face_analyzer = FaceAnalysis(
+    name="buffalo_l", providers=["CUDAExecutionProvider", "CPUExecutionProvider"]
+)
+face_analyzer.prepare(ctx_id=0, det_size=(512, 512))
+
 
 device = "cuda"
 
@@ -50,8 +59,28 @@ for i in range(num):
         if path.endswith(".txt") or path.endswith("landmark.png"):
             continue
         select_image = load_image(os.path.join(person_path, path))
-        face_embed = pipe.cal_face_embed(select_image)
+
+        # ------------- FIX -------------
+        # face_embed = pipe.cal_face_embed(select_image)
+        face_embed = cal_face_embed(select_image)
+        # -------------------------------
+
         if face_embed is None:
             print(f"Error in {str(i)}_{path}")
         else:
             torch.save(face_embed, os.path.join(save_path, path.split(".")[0] + ".pt"))
+
+
+# ------------- FIX -------------
+def cal_face_embed(image_pil):
+    img = np.array(image_pil)
+    faces = face_analyzer.get(img)
+
+    if len(faces) == 0:
+        return None
+
+    face = max(faces, key=lambda x: x.bbox[2] * x.bbox[3])
+    return torch.from_numpy(face.embedding).float()
+
+
+# -------------------------------
