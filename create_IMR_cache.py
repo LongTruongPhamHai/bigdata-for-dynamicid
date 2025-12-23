@@ -55,26 +55,67 @@ pipe.load_DynamicID(base_model_path, SAA_path, IMR_path=None)
 root_path = "/kaggle/input/dataset-for-dynamicid/dataset/base_image_dataset"
 # -------------------------------
 
-num = len(os.listdir(root_path))
-for i in range(num):
-    person_path = os.path.join(root_path, str(i))
+# ------------- FIX -------------
+# num = len(os.listdir(root_path))
+# for i in range(num):
+#     person_path = os.path.join(root_path, str(i))
+#     image_path = sorted(os.listdir(person_path))
+
+#     # ------------- FIX -------------
+#     # save_path = person_path.replace("base_image_dataset", "cache")
+#     save_path = person_path.replace(
+#         "/kaggle/input/dataset-for-dynamicid/dataset/base_image_dataset",
+#         "/kaggle/working/cache",
+#     )
+#     # -------------------------------
+
+#     os.makedirs(save_path, exist_ok=True)
+
+#     # ------------- FIX -------------
+#     # for path in image_path:
+#     #     if path.endswith(".txt") or path.endswith("landmark.png"):
+#     #         continue
+#     #     select_image = load_image(os.path.join(person_path, path))
+
+#     VALID_EXT = (".jpg", ".jpeg", ".png", ".webp", ".bmp")
+
+#     for path in image_path:
+#         if not path.lower().endswith(VALID_EXT):
+#             continue
+
+#         img_path = os.path.join(person_path, path)
+
+#         try:
+#             select_image = load_image(img_path)
+#         except Exception as e:
+#             print(f"❌ Skip {img_path}: {e}")
+#             continue
+
+#         # -------------------------------
+
+#         # ------------- FIX -------------
+#         # face_embed = pipe.cal_face_embed(select_image)
+#         face_embed = cal_face_embed(select_image)
+#         # -------------------------------
+
+#         if face_embed is None:
+#             print(f"Error in {str(i)}_{path}")
+#         else:
+#             torch.save(face_embed, os.path.join(save_path, path.split(".")[0] + ".pt"))
+
+person_ids = sorted(
+    d for d in os.listdir(root_path) if os.path.isdir(os.path.join(root_path, d))
+)
+
+for pid in person_ids:
+    person_path = os.path.join(root_path, pid)
     image_path = sorted(os.listdir(person_path))
 
-    # ------------- FIX -------------
-    # save_path = person_path.replace("base_image_dataset", "cache")
     save_path = person_path.replace(
         "/kaggle/input/dataset-for-dynamicid/dataset/base_image_dataset",
         "/kaggle/working/cache",
     )
-    # -------------------------------
-
     os.makedirs(save_path, exist_ok=True)
-
-    # ------------- FIX -------------
-    # for path in image_path:
-    #     if path.endswith(".txt") or path.endswith("landmark.png"):
-    #         continue
-    #     select_image = load_image(os.path.join(person_path, path))
 
     VALID_EXT = (".jpg", ".jpeg", ".png", ".webp", ".bmp")
 
@@ -90,14 +131,13 @@ for i in range(num):
             print(f"❌ Skip {img_path}: {e}")
             continue
 
-        # -------------------------------
-
-        # ------------- FIX -------------
-        # face_embed = pipe.cal_face_embed(select_image)
         face_embed = cal_face_embed(select_image)
-        # -------------------------------
 
         if face_embed is None:
-            print(f"Error in {str(i)}_{path}")
+            print(f"⚠️ No face: {pid}_{path}")
         else:
-            torch.save(face_embed, os.path.join(save_path, path.split(".")[0] + ".pt"))
+            torch.save(
+                face_embed,
+                os.path.join(save_path, path.split(".")[0] + ".pt"),
+            )
+# -------------------------------
