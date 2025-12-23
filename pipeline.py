@@ -32,7 +32,10 @@ class DynamicIDStableDiffusionPipeline(StableDiffusionPipeline):
         IMR_path=None,
         IMR_depth=1,
         subfolder: str = "",
+        # ------------- FIX -------------
+        # image_encoder_path: str = "./models/laion--CLIP-ViT-H-14-laion2B-s32B-b79K",
         image_encoder_path: str = "./laion/laion--CLIP-ViT-H-14-laion2B-s32B-b79K",
+        # -------------------------------
         torch_dtype=torch.float16,
         num_tokens=4,
         lora_rank=128,
