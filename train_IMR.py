@@ -233,7 +233,11 @@ class DynamicID(torch.nn.Module):
         )["state_dict"]
         # -------------------------------
 
-        adapter_modules.load_state_dict(state_dict, strict=True)
+        # ------------- FIX -------------
+        # adapter_modules.load_state_dict(state_dict, strict=True)
+        adapter_modules.load_state_dict(state_dict, strict=False)
+        # -------------------------------
+
         adapter_modules.requires_grad_(False)
         unet.requires_grad_(False)
         self.unet = unet
