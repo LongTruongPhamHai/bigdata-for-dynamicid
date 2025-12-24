@@ -265,7 +265,7 @@ class IMR(nn.Module):
 
         source_feature = src_landmark + src_txt_embed
         target_feature = tgt_landmark + tgt_txt_embed
-        all_feature = source_feature + target_feature  # [bs, 1536]
+        all_feature = torch.cat([source_feature, target_feature], dim=0)
         # -------------------------------
 
         latents = self.feature_fusion(all_feature)
