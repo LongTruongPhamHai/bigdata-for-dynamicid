@@ -503,6 +503,10 @@ def main():
         keypoint_encoder, imr, optimizer, train_dataloader
     )
 
+    linear_proj = torch.nn.Linear(keypoint_encoder_output_dim, 1536).to(
+        device, dtype=weight_dtype
+    )
+
     for epoch in range(num_train_epochs):
         LDC_loss_sum = 0
         DFM_loss_sum = 0
@@ -557,12 +561,15 @@ def main():
             landmark_feature = keypoint_encoder(landmark_image)
             landmark_feature = landmark_feature.flatten(start_dim=1)
 
-            if landmark_feature.shape[1] != 1536:
-                linear_proj = torch.nn.Linear(landmark_feature.shape[1], 1536).to(
-                    device, dtype=weight_dtype
-                )
-                landmark_feature = landmark_feature.to(weight_dtype)
-                landmark_feature = linear_proj(landmark_feature)
+            # if landmark_feature.shape[1] != 1536:
+            #     linear_proj = torch.nn.Linear(landmark_feature.shape[1], 1536).to(
+            #         device, dtype=weight_dtype
+            #     )
+            #     landmark_feature = landmark_feature.to(weight_dtype)
+            #     landmark_feature = linear_proj(landmark_feature)
+
+            landmark_feature = landmark_feature.to(weight_dtype)  # ✅ fix dtype
+            landmark_feature = linear_proj(landmark_feature)
             # -------------------------------
 
             source_landmark_feature = landmark_feature[:1]
