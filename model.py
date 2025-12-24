@@ -300,6 +300,18 @@ class IMR(nn.Module):
         src_latents = latents[:1]
         tgt_latents = latents[1:]
 
+        # ------------- FIX -------------
+        def ensure_3d(t):
+            if t.dim() == 1:
+                return t.unsqueeze(0).unsqueeze(1)
+            if t.dim() == 2:
+                return t.unsqueeze(1)
+            return t
+
+        src_latents = ensure_3d(src_latents)
+        tgt_latents = ensure_3d(tgt_latents)
+        # -------------------------------
+
         x = self.norm_in(x)
 
         # ------------- FIX -------------
@@ -318,7 +330,10 @@ class IMR(nn.Module):
         x = x.repeat(tgt_latents.shape[0], 1, 1)
 
         for attn1, attn2, ff in self.entangleNet:
-            x = attn1(x, tgt_latents) + x
+            # ------------- FIX -------------
+            # x = attn1(x, tgt_latents) + x
+            x = attn1(tgt_latents, x) + x
+            # -------------------------------
             x = attn2(x) + x
             x = ff(x) + x
 
