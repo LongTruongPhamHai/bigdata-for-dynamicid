@@ -258,6 +258,12 @@ class IMR(nn.Module):
         # tgt_feature = torch.cat([tgt_landmark, tgt_txt_embed], dim=1)
         # all_feature = torch.cat([src_feature, tgt_feature], dim=0)
 
+        if src_landmark.dim() == 1:
+            src_landmark = src_landmark.unsqueeze(0)
+            tgt_landmark = tgt_landmark.unsqueeze(0)
+            src_txt_embed = src_txt_embed.unsqueeze(0)
+            tgt_txt_embed = tgt_txt_embed.unsqueeze(0)
+
         src_landmark = src_landmark.to(self.weight_dtype)
         tgt_landmark = tgt_landmark.to(self.weight_dtype)
         src_txt_embed = src_txt_embed.to(self.weight_dtype)
