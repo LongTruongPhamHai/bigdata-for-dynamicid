@@ -269,6 +269,8 @@ class IMR(nn.Module):
         src_txt_embed = src_txt_embed.to(self.weight_dtype)
         tgt_txt_embed = tgt_txt_embed.to(self.weight_dtype)
 
+        src_landmark = src_landmark.mean(dim=[2, 3])
+        tgt_landmark = tgt_landmark.mean(dim=[2, 3])
         source_feature = src_landmark + src_txt_embed
         target_feature = tgt_landmark + tgt_txt_embed
         all_feature = torch.cat([source_feature, target_feature], dim=0)
