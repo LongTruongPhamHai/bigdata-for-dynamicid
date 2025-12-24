@@ -120,9 +120,12 @@ class MyDataset(torch.utils.data.Dataset):
         }
 
     def __getitem__(self, idx):
-        rand_num = random.random()
-        if rand_num < 0.05:
-            return self.KDEF_data()
+        # ------------- FIX -------------
+        # rand_num = random.random()
+        # if rand_num < 0.05:
+        #     return self.KDEF_data()
+        # -------------------------------
+
         token_ids = os.listdir(os.path.join(self.token_root_path, str(idx)))
         ids = [id.split(".")[0] for id in token_ids]
 
