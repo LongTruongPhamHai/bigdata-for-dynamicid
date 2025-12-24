@@ -275,7 +275,10 @@ class IMR(nn.Module):
         tgt_latents = latents[1:]
 
         x = self.norm_in(x)
-        x = self.proj_in(x)
+
+        # ------------- FIX -------------
+        # x = self.proj_in(x)
+        # -------------------------------
 
         for attn1, attn2, ff in self.disentangleNet:
             x = attn1(x, src_latents) + x
