@@ -269,8 +269,17 @@ class IMR(nn.Module):
         src_txt_embed = src_txt_embed.to(self.weight_dtype)
         tgt_txt_embed = tgt_txt_embed.to(self.weight_dtype)
 
-        src_landmark = src_landmark.mean(dim=[2, 3])
-        tgt_landmark = tgt_landmark.mean(dim=[2, 3])
+        if src_landmark.dim() == 4:
+            src_landmark = src_landmark.mean(dim=[2, 3])
+            tgt_landmark = tgt_landmark.mean(dim=[2, 3])
+        elif src_landmark.dim() == 2:
+            pass
+        elif src_landmark.dim() == 1:
+            src_landmark = src_landmark.unsqueeze(0)
+            tgt_landmark = tgt_landmark.unsqueeze(0)
+        else:
+            raise ValueError(f"Unexpected landmark dim: {src_landmark.shape}")
+
         source_feature = src_landmark + src_txt_embed
         target_feature = tgt_landmark + tgt_txt_embed
         all_feature = torch.cat([source_feature, target_feature], dim=0)
