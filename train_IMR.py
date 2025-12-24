@@ -337,6 +337,23 @@ def parse_args():
         ),
     )
 
+    # ------------- FIX -------------
+    parser.add_argument(
+        "--depth",
+        type=int,
+        default=1,
+        help="Depth of the IMR network layers",
+    )
+
+    parser.add_argument(
+        "--accumulation_steps",
+        type=int,
+        default=1,
+        help="Number of gradient accumulation steps.",
+    )
+
+    # -------------------------------
+
     args = parser.parse_args()
     env_local_rank = int(os.environ.get("LOCAL_RANK", -1))
     if env_local_rank != -1 and env_local_rank != args.local_rank:
@@ -387,7 +404,12 @@ def main():
     save_steps = args.save_steps
     accumulation_steps = args.accumulation_steps
     dataloader_num_workers = args.dataloader_num_workers
-    pretrained_model_path = args.pretrained_model_path
+
+    # ------------- FIX -------------
+    # pretrained_model_path = args.pretrained_model_path
+    pretrained_model_path = args.pretrained_model_name_or_path
+    # -------------------------------
+
     common_prompt = "portrait, cinematic photo, film, professional, 4k, highly detailed"
 
     # Load scheduler, tokenizer and models.
