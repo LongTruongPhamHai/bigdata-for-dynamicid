@@ -289,6 +289,20 @@ class IMR(nn.Module):
         else:
             raise ValueError(f"Unexpected landmark dim: {src_landmark.shape}")
 
+        if tgt_landmark.dim() == 4:
+            tgt_landmark = tgt_landmark.mean(dim=[2, 3])  # [batch, 512]
+            tgt_landmark = self.proj_in(tgt_landmark)  # [batch, 768]
+
+        if src_landmark.dim() == 4:
+            src_landmark = src_landmark.mean(dim=[2, 3])
+            src_landmark = self.proj_in(src_landmark)
+
+        if tgt_txt_embed.dim() == 3:
+            tgt_txt_embed = tgt_txt_embed.mean(dim=1)
+
+        if src_txt_embed.dim() == 3:
+            src_txt_embed = src_txt_embed.mean(dim=1)
+
         source_feature = src_landmark + src_txt_embed
         target_feature = tgt_landmark + tgt_txt_embed
         all_feature = torch.cat([source_feature, target_feature], dim=0)
