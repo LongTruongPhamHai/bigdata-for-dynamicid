@@ -338,10 +338,17 @@ class IMR(nn.Module):
             x = x.unsqueeze(0)
         elif x.dim() == 1:
             x = x.unsqueeze(0).unsqueeze(0)
+
+        # Trước khi x vào LayerNorm
+        if x.dim() == 3 and x.shape[-1] != 768:
+            x = self.proj_in(x)  # Chuyển 512 → 768
+
+        if x.dim() == 2:
+            x = x.unsqueeze(1)  # LayerNorm cần [*, 768]
         # -------------------------------
 
         x = self.norm_in(x)
-        x = self.proj_in(x)
+        # x = self.proj_in(x)
 
         for attn1, attn2, ff in self.disentangleNet:
             # ------------- FIX -------------
