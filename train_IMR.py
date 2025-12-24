@@ -86,7 +86,19 @@ class MyDataset(torch.utils.data.Dataset):
             token = torch.load(
                 os.path.join(token_root_path, img_name + ".pt"), map_location="cpu"
             )
-            raw_image = Image.open(os.path.join(img_root_path, img_name + ".jpg"))
+
+            # ------------- FIX -------------
+            # raw_image = Image.open(os.path.join(img_root_path, img_name + ".jpg"))
+            img_path = os.path.join(img_root_path, img_name)
+            if os.path.exists(img_path + ".jpg"):
+                img_path += ".jpg"
+            elif os.path.exists(img_path + ".png"):
+                img_path += ".png"
+            else:
+                raise FileNotFoundError(f"Image not found: {img_name}")
+            raw_image = Image.open(img_path)
+            # -------------------------------
+
             image = self.transform(raw_image.convert("RGB"))
             landmark_image = Image.open(
                 os.path.join(img_root_path, img_name + "_landmark.png")
