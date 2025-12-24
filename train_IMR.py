@@ -364,7 +364,16 @@ def main():
 
     device = accelerator.device
 
-    weight_dtype = args.weight_dtype
+    # ------------- FIX -------------
+    # weight_dtype = args.weight_dtype
+    if args.mixed_precision == "fp16":
+        weight_dtype = torch.float16
+    elif args.mixed_precision == "bf16":
+        weight_dtype = torch.bfloat16
+    else:
+        weight_dtype = torch.float32
+    # -------------------------------
+
     learning_rate = args.learning_rate
     weight_decay = args.weight_decay
     num_train_epochs = args.num_train_epochs
