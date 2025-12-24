@@ -378,48 +378,45 @@ class IMR(nn.Module):
     #     return x
 
     def forward(self, x, src_landmark, tgt_landmark, src_txt_embed, tgt_txt_embed):
-        # đảm bảo batch dim
+        # --- ensure batch dim ---
         if src_landmark.dim() == 1:
             src_landmark = src_landmark.unsqueeze(0)
             tgt_landmark = tgt_landmark.unsqueeze(0)
             src_txt_embed = src_txt_embed.unsqueeze(0)
             tgt_txt_embed = tgt_txt_embed.unsqueeze(0)
 
-        # chuyển sang dtype
+        # --- convert dtype ---
         src_landmark = src_landmark.to(self.weight_dtype)
         tgt_landmark = tgt_landmark.to(self.weight_dtype)
         src_txt_embed = src_txt_embed.to(self.weight_dtype)
         tgt_txt_embed = tgt_txt_embed.to(self.weight_dtype)
 
-        # flatten landmark nếu cần
+        # --- flatten spatial if 4D ---
         if src_landmark.dim() == 4:
-            src_landmark = src_landmark.mean(dim=[2, 3])  # [B, 512]
+            src_landmark = src_landmark.mean(dim=[2, 3])
+        if tgt_landmark.dim() == 4:
             tgt_landmark = tgt_landmark.mean(dim=[2, 3])
 
-        # đảm bảo text embedding là 2D
+        # --- project landmark to 768 nếu cần ---
+        if src_landmark.shape[-1] != 768:
+            src_landmark = self.landmark_proj(src_landmark)
+        if tgt_landmark.shape[-1] != 768:
+            tgt_landmark = self.landmark_proj(tgt_landmark)
+
+        # --- flatten text embedding nếu 3D ---
         if src_txt_embed.dim() == 3:
             src_txt_embed = src_txt_embed.mean(dim=1)
         if tgt_txt_embed.dim() == 3:
             tgt_txt_embed = tgt_txt_embed.mean(dim=1)
 
-        # ------------- fix chính: chuyển landmark 512 → 768 -------------
-        src_landmark = self.landmark_proj(src_landmark)
-        tgt_landmark = self.landmark_proj(tgt_landmark)
-        # -----------------------------------------------------------------
-
-        # cộng với text embedding
+        # --- combine features ---
         source_feature = src_landmark + src_txt_embed
         target_feature = tgt_landmark + tgt_txt_embed
         all_feature = torch.cat([source_feature, target_feature], dim=0)
 
-        # feature fusion → latents
+        # --- feature fusion ---
         latents = self.feature_fusion(all_feature)
-        if latents.dim() == 2:
-            latents = latents.view(latents.shape[0], self.num_queries, self.dim)
-        elif latents.dim() == 1:
-            latents = latents.view(1, self.num_queries, self.dim)
-        else:
-            raise ValueError(f"Unexpected latents shape: {latents.shape}")
+        latents = latents.view(latents.shape[0], self.num_queries, self.dim)
 
         src_latents = latents[:1]
         tgt_latents = latents[1:]
@@ -439,15 +436,13 @@ class IMR(nn.Module):
         elif x.dim() == 1:
             x = x.unsqueeze(0).unsqueeze(0)
 
-        # x vào LayerNorm
-        if x.dim() == 3 and x.shape[-1] != 768:
-            x = self.proj_in(x)  # [*, 512] → [*, 768]
-        if x.dim() == 2:
-            x = x.unsqueeze(1)
+        # --- project x nếu shape khác dim ---
+        if x.shape[-1] != self.dim:
+            x = self.proj_in(x)
 
         x = self.norm_in(x)
 
-        # disentangleNet
+        # --- disentangleNet ---
         for attn1, attn2, ff in self.disentangleNet:
             src_latents_b = src_latents.repeat(x.shape[0], 1, 1)
             x = attn1(src_latents_b, x) + x
@@ -456,7 +451,7 @@ class IMR(nn.Module):
 
         x = x.repeat(tgt_latents.shape[0], 1, 1)
 
-        # entangleNet
+        # --- entangleNet ---
         for attn1, attn2, ff in self.entangleNet:
             tgt_latents_b = tgt_latents.repeat(x.shape[0], 1, 1)
             x = attn1(tgt_latents_b, x) + x
@@ -466,5 +461,3 @@ class IMR(nn.Module):
         x = self.norm_out(x)
         x = self.proj_out(x)
         return x
-
-        # -------------------------------
