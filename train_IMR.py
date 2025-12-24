@@ -561,6 +561,7 @@ def main():
                 linear_proj = torch.nn.Linear(landmark_feature.shape[1], 1536).to(
                     device, dtype=weight_dtype
                 )
+                landmark_feature = landmark_feature.to(weight_dtype)
                 landmark_feature = linear_proj(landmark_feature)
             # -------------------------------
 
