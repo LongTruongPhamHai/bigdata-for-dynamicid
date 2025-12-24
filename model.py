@@ -204,8 +204,12 @@ class IMR(nn.Module):
         # -------------------------------
 
         self.feature_fusion = nn.Sequential(
-            nn.LayerNorm(embedding_dim + txt_dim),
-            nn.Linear(embedding_dim + txt_dim, dim),
+            # ------------- FIX -------------
+            # nn.LayerNorm(embedding_dim + txt_dim),
+            # nn.Linear(embedding_dim + txt_dim, dim),
+            nn.LayerNorm(embedding_dim),
+            nn.Linear(embedding_dim, dim),
+            # -------------------------------
             nn.GELU(),
             nn.LayerNorm(dim),
             nn.Linear(dim, num_queries * dim),
