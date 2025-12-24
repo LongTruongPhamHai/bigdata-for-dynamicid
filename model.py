@@ -182,7 +182,10 @@ class MultAttention(nn.Module):
 class IMR(nn.Module):
     def __init__(
         self,
-        dim=1024,
+        # ------------- FIX -------------
+        # dim=1024,
+        dim=512,
+        # -------------------------------
         dim_head=64,
         heads=16,
         num_queries=4,
