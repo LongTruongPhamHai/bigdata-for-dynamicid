@@ -307,7 +307,11 @@ class IMR(nn.Module):
         # -------------------------------
 
         for attn1, attn2, ff in self.disentangleNet:
-            x = attn1(x, src_latents) + x
+            # ------------- FIX -------------
+            # x = attn1(x, src_latents) + x
+            x = attn1(src_latents, x) + x
+            # -------------------------------
+
             x = attn2(x) + x
             x = ff(x) + x
 
