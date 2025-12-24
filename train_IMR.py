@@ -503,9 +503,16 @@ def main():
         keypoint_encoder, imr, optimizer, train_dataloader
     )
 
+    # ------------- FIX -------------
+    with torch.no_grad():
+        dummy = torch.zeros(1, 1, 256, 256).to(device, dtype=weight_dtype)
+        dummy_out = keypoint_encoder(dummy)
+        keypoint_encoder_output_dim = dummy_out.flatten(start_dim=1).shape[1]
+
     linear_proj = torch.nn.Linear(keypoint_encoder_output_dim, 1536).to(
         device, dtype=weight_dtype
     )
+    # -------------------------------
 
     for epoch in range(num_train_epochs):
         LDC_loss_sum = 0
