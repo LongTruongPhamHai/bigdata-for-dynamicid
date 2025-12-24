@@ -474,22 +474,26 @@ def main():
     text_encoder.to(device, dtype=weight_dtype)
     DynamicID_model = DynamicID(unet, device, weight_dtype=weight_dtype)
 
-    imr = (
-        IMR(erase_layer_num=depth, drive_layer_num=depth)
-        .to(device, dtype=weight_dtype)
-        .requires_grad_(True)
-    )
+    # ------------- FIX -------------
+    # imr = (
+    #     IMR(erase_layer_num=depth, drive_layer_num=depth)
+    #     .to(device, dtype=weight_dtype)
+    #     .requires_grad_(True)
+    # )
+    imr = IMR(dim=768, erase_layer_num=depth, drive_layer_num=depth)
+    # -------------------------------
+
     keypoint_encoder = (
         KeyPointEncoder().to(device, dtype=weight_dtype).requires_grad_(True)
     )
 
     # ------------- FIX -------------
     # params_to_opt = itertools.chain(keypoint_encoder.parameters(), imr.parameters())
-    linear_proj = torch.nn.Linear(768, 768).to(device, dtype=weight_dtype)
+    linear_proj = torch.nn.Linear(512, 768).to(device, dtype=weight_dtype)
     params_to_opt = itertools.chain(
         keypoint_encoder.parameters(),
         imr.parameters(),
-        linear_proj.parameters(),
+        # linear_proj.parameters(),
     )
     # -------------------------------
 
@@ -507,16 +511,9 @@ def main():
         num_workers=dataloader_num_workers,
     )
 
-    # ------------- FIX -------------
-    # keypoint_encoder, imr, optimizer, train_dataloader = accelerator.prepare(
-    #     keypoint_encoder, imr, optimizer, train_dataloader
-    # )
-    keypoint_encoder, imr, linear_proj, optimizer, train_dataloader = (
-        accelerator.prepare(
-            keypoint_encoder, imr, linear_proj, optimizer, train_dataloader
-        )
+    keypoint_encoder, imr, optimizer, train_dataloader = accelerator.prepare(
+        keypoint_encoder, imr, optimizer, train_dataloader
     )
-    # -------------------------------
 
     for epoch in range(num_train_epochs):
         LDC_loss_sum = 0
@@ -542,6 +539,7 @@ def main():
             source_face_prompt = batch["source_face_prompt"]
             target_tokens = batch["target_tokens"].to(device, dtype=weight_dtype)
             target_face_prompts = batch["target_face_prompts"]
+
             face_prompts = [source_face_prompt] + target_face_prompts
             text_inputs = tokenizer(
                 face_prompts,
@@ -551,7 +549,10 @@ def main():
                 return_tensors="pt",
             )
             face_prompts = (
-                text_encoder(text_inputs.input_ids.to(device))[1]
+                # ------------- FIX -------------
+                # text_encoder(text_inputs.input_ids.to(device))[1]
+                text_encoder(text_inputs.input_ids.to(device))[0]
+                # -------------------------------
                 .detach()
                 .requires_grad_(False)
                 .to(weight_dtype)
@@ -576,7 +577,6 @@ def main():
 
             landmark_feature = landmark_feature.flatten(1)
             landmark_feature = landmark_feature.to(weight_dtype)
-            landmark_feature = linear_proj(landmark_feature)
             # -------------------------------
 
             source_landmark_feature = landmark_feature[:1]
