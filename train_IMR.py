@@ -84,73 +84,73 @@ class MyDataset(torch.utils.data.Dataset):
         face_prompts = self.face_prompts
 
         # ------------- FIX -------------
-        # for img_name in img_names:
-        #     token = torch.load(
-        #         os.path.join(token_root_path, img_name + ".pt"), map_location="cpu"
-        #     )
-
-        #     # ------------- FIX -------------
-        #     # raw_image = Image.open(os.path.join(img_root_path, img_name + ".jpg"))
-        #     img_path_jpg = os.path.join(img_root_path, img_name + ".jpg")
-        #     img_path_png = os.path.join(img_root_path, img_name + ".png")
-
-        #     if os.path.exists(img_path_jpg):
-        #         raw_image = Image.open(img_path_jpg)
-        #     elif os.path.exists(img_path_png):
-        #         raw_image = Image.open(img_path_png)
-        #     else:
-        #         raise FileNotFoundError(f"Image not found: {img_name}")
-        #     # -------------------------------
-
-        #     image = self.transform(raw_image.convert("RGB"))
-        #     landmark_image = Image.open(
-        #         os.path.join(img_root_path, img_name + "_landmark.png")
-        #     ).convert("L")
-        #     landmark_image = self.transform(landmark_image)
-        #     tokens.append(token)
-        #     images.append(image)
-        #     landmarks.append(landmark_image)
-
         for img_name in img_names:
-            try:
-                # token
-                token_path = os.path.join(token_root_path, img_name + ".pt")
-                if not os.path.exists(token_path):
-                    print(f"Token not found, skipping: {img_name}")
-                    continue
-                token = torch.load(token_path, map_location="cpu")
+            token = torch.load(
+                os.path.join(token_root_path, img_name + ".pt"), map_location="cpu"
+            )
 
-                # raw image
-                img_path_jpg = os.path.join(img_root_path, img_name + ".jpg")
-                img_path_png = os.path.join(img_root_path, img_name + ".png")
-                if os.path.exists(img_path_jpg):
-                    raw_image = Image.open(img_path_jpg)
-                elif os.path.exists(img_path_png):
-                    raw_image = Image.open(img_path_png)
-                else:
-                    print(f"Image not found, skipping: {img_name}")
-                    continue
+            # ------------- FIX -------------
+            raw_image = Image.open(os.path.join(img_root_path, img_name + ".jpg"))
+            # img_path_jpg = os.path.join(img_root_path, img_name + ".jpg")
+            # img_path_png = os.path.join(img_root_path, img_name + ".png")
 
-                image = self.transform(raw_image.convert("RGB"))
-
-                # landmark
-                landmark_path = os.path.join(img_root_path, img_name + "_landmark.png")
-                if os.path.exists(landmark_path):
-                    landmark_image = Image.open(landmark_path).convert("L")
-                    landmark_image = self.transform(landmark_image)
-                else:
-                    print(f"Landmark not found, skipping: {img_name}")
-                    continue
-
-                # append
-                tokens.append(token)
-                images.append(image)
-                landmarks.append(landmark_image)
-
-            except Exception as e:
-                print(f"Error with {img_name}: {e}, skipping...")
-                continue
+            # if os.path.exists(img_path_jpg):
+            #     raw_image = Image.open(img_path_jpg)
+            # elif os.path.exists(img_path_png):
+            #     raw_image = Image.open(img_path_png)
+            # else:
+            #     raise FileNotFoundError(f"Image not found: {img_name}")
             # -------------------------------
+
+            image = self.transform(raw_image.convert("RGB"))
+            landmark_image = Image.open(
+                os.path.join(img_root_path, img_name + "_landmark.png")
+            ).convert("L")
+            landmark_image = self.transform(landmark_image)
+            tokens.append(token)
+            images.append(image)
+            landmarks.append(landmark_image)
+
+        # for img_name in img_names:
+        #     try:
+        #         # token
+        #         token_path = os.path.join(token_root_path, img_name + ".pt")
+        #         if not os.path.exists(token_path):
+        #             print(f"Token not found, skipping: {img_name}")
+        #             continue
+        #         token = torch.load(token_path, map_location="cpu")
+
+        #         # raw image
+        #         img_path_jpg = os.path.join(img_root_path, img_name + ".jpg")
+        #         img_path_png = os.path.join(img_root_path, img_name + ".png")
+        #         if os.path.exists(img_path_jpg):
+        #             raw_image = Image.open(img_path_jpg)
+        #         elif os.path.exists(img_path_png):
+        #             raw_image = Image.open(img_path_png)
+        #         else:
+        #             print(f"Image not found, skipping: {img_name}")
+        #             continue
+
+        #         image = self.transform(raw_image.convert("RGB"))
+
+        #         # landmark
+        #         landmark_path = os.path.join(img_root_path, img_name + "_landmark.png")
+        #         if os.path.exists(landmark_path):
+        #             landmark_image = Image.open(landmark_path).convert("L")
+        #             landmark_image = self.transform(landmark_image)
+        #         else:
+        #             print(f"Landmark not found, skipping: {img_name}")
+        #             continue
+
+        #         # append
+        #         tokens.append(token)
+        #         images.append(image)
+        #         landmarks.append(landmark_image)
+
+        #     except Exception as e:
+        #         print(f"Error with {img_name}: {e}, skipping...")
+        #         continue
+        # -------------------------------
 
         src_id = random.sample([i for i in range(len(tokens))], 1)[0]
         src_token = copy.deepcopy(tokens[src_id])
@@ -205,9 +205,15 @@ class MyDataset(torch.utils.data.Dataset):
                 os.path.join(self.token_root_path, str(idx), id + ".pt"),
                 map_location="cpu",
             )
+            # ------------- FIX -------------
+            # raw_image = Image.open(
+            #     os.path.join(self.image_root_path, str(idx), id + ".png")
+            # )
             raw_image = Image.open(
-                os.path.join(self.image_root_path, str(idx), id + ".png")
+                os.path.join(self.image_root_path, str(idx), id + ".jpg")
             )
+            # -------------------------------
+
             target_face_prompt_path = os.path.join(
                 self.image_root_path, str(idx), id + ".txt"
             )
