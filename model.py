@@ -129,7 +129,11 @@ class PerceiverAttention(nn.Module):
         weight = torch.softmax(weight.float(), dim=-1).type(weight.dtype)
         out = weight @ v
 
+        # ------------- FIX -------------
+        # out = out.permute(0, 2, 1, 3).reshape(b, l, -1)
+        out = out.view(b, self.heads, l, self.dim_head)
         out = out.permute(0, 2, 1, 3).reshape(b, l, -1)
+        # -------------------------------
 
         return self.to_out(out)
 
