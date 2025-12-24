@@ -230,6 +230,7 @@ class IMR(nn.Module):
         # ------------- FIX -------------
         # self.norm_in = nn.LayerNorm(embedding_dim)
         # self.proj_in = nn.Linear(embedding_dim, dim)
+        self.proj_in = nn.Linear(768, dim)
         self.proj_out = nn.Linear(dim, embedding_dim)
         self.norm_in = nn.LayerNorm(dim)
         # -------------------------------
@@ -326,10 +327,7 @@ class IMR(nn.Module):
         # -------------------------------
 
         x = self.norm_in(x)
-
-        # ------------- FIX -------------
-        # x = self.proj_in(x)
-        # -------------------------------
+        x = self.proj_in(x)
 
         for attn1, attn2, ff in self.disentangleNet:
             # ------------- FIX -------------
