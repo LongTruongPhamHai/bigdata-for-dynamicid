@@ -377,7 +377,12 @@ def main():
     learning_rate = args.learning_rate
     weight_decay = args.weight_decay
     num_train_epochs = args.num_train_epochs
-    batch_size = args.batch_size
+
+    # ------------- FIX -------------
+    # batch_size = args.batch_size
+    batch_size = args.train_batch_size
+    # -------------------------------
+
     depth = args.depth
     save_steps = args.save_steps
     accumulation_steps = args.accumulation_steps
