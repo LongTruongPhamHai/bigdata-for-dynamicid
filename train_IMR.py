@@ -230,7 +230,7 @@ class DynamicID(torch.nn.Module):
         # state_dict = torch.load("./SAA.bin", map_location="cpu")["adapter_modules"]
         state_dict = torch.load(
             "/kaggle/working/bigdata-for-dynamicid/models/SAA.bin", map_location="cpu"
-        )["adapter_modules"]
+        )["state_dict"]
         # -------------------------------
 
         adapter_modules.load_state_dict(state_dict, strict=True)
