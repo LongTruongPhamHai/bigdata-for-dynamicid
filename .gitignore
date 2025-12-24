@@ -1,3 +1,10 @@
 dataset/
 dataset.rar
+
 saa-model.safetensors
+
+IMR_cache/
+IMR_cache.zip
+
+dataset-preprocessed/
+dataset-preprocessed.rar
