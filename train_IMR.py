@@ -483,7 +483,15 @@ def main():
         KeyPointEncoder().to(device, dtype=weight_dtype).requires_grad_(True)
     )
 
-    params_to_opt = itertools.chain(keypoint_encoder.parameters(), imr.parameters())
+    # ------------- FIX -------------
+    # params_to_opt = itertools.chain(keypoint_encoder.parameters(), imr.parameters())
+    linear_proj = torch.nn.Linear(768, 1536).to(device, dtype=weight_dtype)
+    params_to_opt = itertools.chain(
+        keypoint_encoder.parameters(),
+        imr.parameters(),
+        linear_proj.parameters(),
+    )
+    # -------------------------------
 
     optimizer = torch.optim.AdamW(
         params_to_opt, lr=learning_rate, weight_decay=weight_decay
@@ -499,18 +507,14 @@ def main():
         num_workers=dataloader_num_workers,
     )
 
-    keypoint_encoder, imr, optimizer, train_dataloader = accelerator.prepare(
-        keypoint_encoder, imr, optimizer, train_dataloader
-    )
-
     # ------------- FIX -------------
-    with torch.no_grad():
-        dummy = torch.zeros(1, 1, 256, 256).to(device, dtype=weight_dtype)
-        dummy_out = keypoint_encoder(dummy)
-        keypoint_encoder_output_dim = dummy_out.flatten(start_dim=1).shape[1]
-
-    linear_proj = torch.nn.Linear(keypoint_encoder_output_dim, 1536).to(
-        device, dtype=weight_dtype
+    # keypoint_encoder, imr, optimizer, train_dataloader = accelerator.prepare(
+    #     keypoint_encoder, imr, optimizer, train_dataloader
+    # )
+    keypoint_encoder, imr, linear_proj, optimizer, train_dataloader = (
+        accelerator.prepare(
+            keypoint_encoder, imr, linear_proj, optimizer, train_dataloader
+        )
     )
     # -------------------------------
 
@@ -566,16 +570,12 @@ def main():
             # landmark_feature = landmark_feature.reshape(bsz + 1, -1)
 
             landmark_feature = keypoint_encoder(landmark_image)
-            landmark_feature = landmark_feature.flatten(start_dim=1)
+            landmark_feature = torch.nn.functional.adaptive_avg_pool2d(
+                landmark_feature, (1, 1)
+            )
 
-            # if landmark_feature.shape[1] != 1536:
-            #     linear_proj = torch.nn.Linear(landmark_feature.shape[1], 1536).to(
-            #         device, dtype=weight_dtype
-            #     )
-            #     landmark_feature = landmark_feature.to(weight_dtype)
-            #     landmark_feature = linear_proj(landmark_feature)
-
-            landmark_feature = landmark_feature.to(weight_dtype)  # ✅ fix dtype
+            landmark_feature = landmark_feature.flatten(1)
+            landmark_feature = landmark_feature.to(weight_dtype)
             landmark_feature = linear_proj(landmark_feature)
             # -------------------------------
 
