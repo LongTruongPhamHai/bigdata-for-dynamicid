@@ -89,6 +89,16 @@ class MyDataset(torch.utils.data.Dataset):
 
             # ------------- FIX -------------
             # raw_image = Image.open(os.path.join(img_root_path, img_name + ".jpg"))
+            img_path_jpg = os.path.join(img_root_path, img_name + ".jpg")
+            img_path_png = os.path.join(img_root_path, img_name + ".png")
+
+            if os.path.exists(img_path_jpg):
+                raw_image = Image.open(img_path_jpg)
+            elif os.path.exists(img_path_png):
+                raw_image = Image.open(img_path_png)
+            else:
+                raise FileNotFoundError(f"Image not found: {img_name}")
+
             img_path = os.path.join(img_root_path, img_name)
             if os.path.exists(img_path + ".jpg"):
                 img_path += ".jpg"
