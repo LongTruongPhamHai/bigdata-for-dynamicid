@@ -286,7 +286,16 @@ class IMR(nn.Module):
         # -------------------------------
 
         latents = self.feature_fusion(all_feature)
-        latents = latents.reshape(latents.shape[0], self.num_queries, self.dim)
+
+        # ------------- FIX -------------
+        # latents = latents.reshape(latents.shape[0], self.num_queries, self.dim)
+        if latents.dim() == 2:
+            latents = latents.view(latents.shape[0], self.num_queries, self.dim)
+        elif latents.dim() == 1:
+            latents = latents.view(1, self.num_queries, self.dim)
+        else:
+            raise ValueError(f"Unexpected latents shape: {latents.shape}")
+        # -------------------------------
 
         src_latents = latents[:1]
         tgt_latents = latents[1:]
