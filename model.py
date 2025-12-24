@@ -212,6 +212,7 @@ class IMR(nn.Module):
 
         # ------------- FIX -------------
         self.weight_dtype = weight_dtype
+        self.landmark_proj = nn.Linear(512, 768)
         # -------------------------------
 
         self.feature_fusion = nn.Sequential(
@@ -377,76 +378,93 @@ class IMR(nn.Module):
     #     return x
 
     def forward(self, x, src_landmark, tgt_landmark, src_txt_embed, tgt_txt_embed):
-        # ---------------------- Chuẩn hóa input ----------------------
-        # Đảm bảo tất cả input ít nhất 2D
-        def ensure_2d(t):
-            if t.dim() == 1:
-                return t.unsqueeze(0)
-            return t
+        # đảm bảo batch dim
+        if src_landmark.dim() == 1:
+            src_landmark = src_landmark.unsqueeze(0)
+            tgt_landmark = tgt_landmark.unsqueeze(0)
+            src_txt_embed = src_txt_embed.unsqueeze(0)
+            tgt_txt_embed = tgt_txt_embed.unsqueeze(0)
 
-        src_landmark = ensure_2d(src_landmark).to(self.weight_dtype)
-        tgt_landmark = ensure_2d(tgt_landmark).to(self.weight_dtype)
-        src_txt_embed = ensure_2d(src_txt_embed).to(self.weight_dtype)
-        tgt_txt_embed = ensure_2d(tgt_txt_embed).to(self.weight_dtype)
+        # chuyển sang dtype
+        src_landmark = src_landmark.to(self.weight_dtype)
+        tgt_landmark = tgt_landmark.to(self.weight_dtype)
+        src_txt_embed = src_txt_embed.to(self.weight_dtype)
+        tgt_txt_embed = tgt_txt_embed.to(self.weight_dtype)
 
-        # Nếu là feature 4D (ảnh), lấy mean HxW
+        # flatten landmark nếu cần
         if src_landmark.dim() == 4:
-            src_landmark = src_landmark.mean(dim=[2, 3])
-        if tgt_landmark.dim() == 4:
+            src_landmark = src_landmark.mean(dim=[2, 3])  # [B, 512]
             tgt_landmark = tgt_landmark.mean(dim=[2, 3])
 
-        # Nếu text embedding là 3D, lấy mean sequence dim
+        # đảm bảo text embedding là 2D
         if src_txt_embed.dim() == 3:
             src_txt_embed = src_txt_embed.mean(dim=1)
         if tgt_txt_embed.dim() == 3:
             tgt_txt_embed = tgt_txt_embed.mean(dim=1)
 
-        # ---------------------- Chuyển landmark 512 -> 768 ----------------------
-        if src_landmark.shape[-1] != src_txt_embed.shape[-1]:
-            src_landmark = self.proj_in(src_landmark)
-            tgt_landmark = self.proj_in(tgt_landmark)
+        # ------------- fix chính: chuyển landmark 512 → 768 -------------
+        src_landmark = self.landmark_proj(src_landmark)
+        tgt_landmark = self.landmark_proj(tgt_landmark)
+        # -----------------------------------------------------------------
 
-        # ---------------------- Tạo feature chung ----------------------
+        # cộng với text embedding
         source_feature = src_landmark + src_txt_embed
         target_feature = tgt_landmark + tgt_txt_embed
         all_feature = torch.cat([source_feature, target_feature], dim=0)
 
-        # ---------------------- Tạo latent ----------------------
-        latents = self.feature_fusion(all_feature)  # [2, num_queries*dim]
-        latents = latents.view(latents.shape[0], self.num_queries, self.dim)
+        # feature fusion → latents
+        latents = self.feature_fusion(all_feature)
+        if latents.dim() == 2:
+            latents = latents.view(latents.shape[0], self.num_queries, self.dim)
+        elif latents.dim() == 1:
+            latents = latents.view(1, self.num_queries, self.dim)
+        else:
+            raise ValueError(f"Unexpected latents shape: {latents.shape}")
 
         src_latents = latents[:1]
         tgt_latents = latents[1:]
 
-        # ---------------------- Chuẩn hóa x trước LayerNorm ----------------------
+        def ensure_3d(t):
+            if t.dim() == 1:
+                return t.unsqueeze(0).unsqueeze(1)
+            if t.dim() == 2:
+                return t.unsqueeze(1)
+            return t
+
+        src_latents = ensure_3d(src_latents)
+        tgt_latents = ensure_3d(tgt_latents)
+
         if x.dim() == 2:
             x = x.unsqueeze(0)
         elif x.dim() == 1:
             x = x.unsqueeze(0).unsqueeze(0)
 
-        # Nếu feature dimension != latent dim, chuyển
-        if x.shape[-1] != self.dim:
-            x = self.proj_in(x)
+        # x vào LayerNorm
+        if x.dim() == 3 and x.shape[-1] != 768:
+            x = self.proj_in(x)  # [*, 512] → [*, 768]
+        if x.dim() == 2:
+            x = x.unsqueeze(1)
 
         x = self.norm_in(x)
 
-        # ---------------------- DisentangleNet ----------------------
+        # disentangleNet
         for attn1, attn2, ff in self.disentangleNet:
             src_latents_b = src_latents.repeat(x.shape[0], 1, 1)
             x = attn1(src_latents_b, x) + x
             x = attn2(x) + x
             x = ff(x) + x
 
-        # ---------------------- EntangleNet ----------------------
         x = x.repeat(tgt_latents.shape[0], 1, 1)
+
+        # entangleNet
         for attn1, attn2, ff in self.entangleNet:
             tgt_latents_b = tgt_latents.repeat(x.shape[0], 1, 1)
             x = attn1(tgt_latents_b, x) + x
             x = attn2(x) + x
             x = ff(x) + x
 
-        # ---------------------- Output ----------------------
         x = self.norm_out(x)
         x = self.proj_out(x)
         return x
+
         # -------------------------------
