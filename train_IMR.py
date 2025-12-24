@@ -546,8 +546,20 @@ def main():
             landmark_image = torch.cat([src_landmark, tgt_landmark], dim=0).to(
                 device, dtype=weight_dtype
             )
+
+            # ------------- FIX -------------
+            # landmark_feature = keypoint_encoder(landmark_image)
+            # landmark_feature = landmark_feature.reshape(bsz + 1, -1)
+
             landmark_feature = keypoint_encoder(landmark_image)
-            landmark_feature = landmark_feature.reshape(bsz + 1, -1)
+            landmark_feature = landmark_feature.flatten(start_dim=1)
+
+            if landmark_feature.shape[1] != 1536:
+                linear_proj = torch.nn.Linear(landmark_feature.shape[1], 1536).to(
+                    device, dtype=weight_dtype
+                )
+                landmark_feature = linear_proj(landmark_feature)
+            # -------------------------------
 
             source_landmark_feature = landmark_feature[:1]
             target_landmark_feature = landmark_feature[1:]
