@@ -326,7 +326,7 @@ class IMR(nn.Module):
         for attn1, attn2, ff in self.disentangleNet:
             # ------------- FIX -------------
             # x = attn1(x, src_latents) + x
-            src_latents_b = src_latents.repeat(x.shape[0], -1, -1)
+            src_latents_b = src_latents.repeat(x.shape[0], 1, 1)
             x = attn1(src_latents_b, x) + x
             # -------------------------------
 
@@ -338,7 +338,7 @@ class IMR(nn.Module):
         for attn1, attn2, ff in self.entangleNet:
             # ------------- FIX -------------
             # x = attn1(x, tgt_latents) + x
-            tgt_latents_b = tgt_latents.repeat(x.shape[0], -1, -1)
+            tgt_latents_b = tgt_latents.repeat(x.shape[0], 1, 1)
             x = attn1(tgt_latents_b, x) + x
             # -------------------------------
             x = attn2(x) + x
