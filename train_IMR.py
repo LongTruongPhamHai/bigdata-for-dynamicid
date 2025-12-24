@@ -27,7 +27,12 @@ class MyDataset(torch.utils.data.Dataset):
     def __init__(self, root_path="./dataset/", standard_size=32):
         super().__init__()
         self.image_root_path = os.path.join(root_path, "base_image_dataset")
-        self.token_root_path = os.path.join(root_path, "cache", "base_cache")
+
+        # ------------- FIX -------------
+        # self.token_root_path = os.path.join(root_path, "cache", "base_cache")
+        self.token_root_path = "/kaggle/input/imr-cache/IMR_cache"
+        # -------------------------------
+
         self.standard_size = standard_size
 
         self.transform = transforms.Compose(
