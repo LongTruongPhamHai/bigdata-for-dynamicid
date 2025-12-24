@@ -29,7 +29,7 @@ class MyDataset(torch.utils.data.Dataset):
         # ------------- FIX -------------
         # self.image_root_path = os.path.join(root_path, "base_image_dataset")
         # self.token_root_path = os.path.join(root_path, "cache", "base_cache")
-        self.image_root_path = "/kaggle/input/dataset-for-dynamicid-preprocessed/dataset-processed/base_image_dataset"
+        self.image_root_path = "/kaggle/input/dataset-for-dynamicid-preprocessed/dataset-preprocessed/base_image_dataset"
         self.token_root_path = "/kaggle/input/imr-cache/IMR_cache"
         # -------------------------------
 
