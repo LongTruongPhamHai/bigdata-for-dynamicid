@@ -485,7 +485,7 @@ def main():
 
     # ------------- FIX -------------
     # params_to_opt = itertools.chain(keypoint_encoder.parameters(), imr.parameters())
-    linear_proj = torch.nn.Linear(768, 1536).to(device, dtype=weight_dtype)
+    linear_proj = torch.nn.Linear(768, 768).to(device, dtype=weight_dtype)
     params_to_opt = itertools.chain(
         keypoint_encoder.parameters(),
         imr.parameters(),
