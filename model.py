@@ -216,10 +216,13 @@ class IMR(nn.Module):
             nn.GELU(),
         )
 
-        self.norm_in = nn.LayerNorm(embedding_dim)
-        self.proj_in = nn.Linear(embedding_dim, dim)
+        # ------------- FIX -------------
+        # self.norm_in = nn.LayerNorm(embedding_dim)
+        # self.proj_in = nn.Linear(embedding_dim, dim)
+        # self.proj_out = nn.Linear(dim, embedding_dim)
+        self.norm_in = nn.LayerNorm(dim)
+        # -------------------------------
 
-        self.proj_out = nn.Linear(dim, embedding_dim)
         self.norm_out = nn.LayerNorm(dim)
 
         self.disentangleNet = nn.ModuleList([])
