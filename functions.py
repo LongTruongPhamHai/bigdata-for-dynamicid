@@ -12,19 +12,19 @@ from einops.layers.torch import Rearrange
 from PIL import Image
 import matplotlib.pyplot as plt
 
+
 def show_aware_map(activate_query, width=None, height=None):
     if activate_query.dim() == 1:
-        activate_query = activate_query.reshape(width,height)
+        activate_query = activate_query.reshape(width, height)
     plt.gca().axes.xaxis.set_visible(False)
     plt.gca().axes.yaxis.set_visible(False)
-    plt.axis('off')
+    plt.axis("off")
     plt.gca().set_axis_off()
-    plt.subplots_adjust(top=1, bottom=0, right=1, left=0, 
-                        hspace=0, wspace=0)
-    plt.margins(0,0)
+    plt.subplots_adjust(top=1, bottom=0, right=1, left=0, hspace=0, wspace=0)
+    plt.margins(0, 0)
     plt.gca().xaxis.set_major_locator(plt.NullLocator())
     plt.gca().yaxis.set_major_locator(plt.NullLocator())
-    plt.imshow(activate_query, cmap='gray')
+    plt.imshow(activate_query, cmap="gray")
     plt.show()
 
 
@@ -45,6 +45,7 @@ def reshape_tensor(x, heads):
     x = x.transpose(1, 2)
     x = x.reshape(bs, heads, length, -1)
     return x
+
 
 class PerceiverAttention(nn.Module):
     def __init__(self, *, dim, dim_head=64, heads=8):
@@ -93,6 +94,7 @@ class PerceiverAttention(nn.Module):
 
         return self.to_out(out)
 
+
 class FacePerceiverResampler(torch.nn.Module):
     def __init__(
         self,
@@ -106,7 +108,7 @@ class FacePerceiverResampler(torch.nn.Module):
         ff_mult=4,
     ):
         super().__init__()
-        
+
         self.proj_in = torch.nn.Linear(embedding_dim, dim)
         self.proj_out = torch.nn.Linear(dim, output_dim)
         self.norm_out = torch.nn.LayerNorm(output_dim)
@@ -128,21 +130,28 @@ class FacePerceiverResampler(torch.nn.Module):
             latents = ff(latents) + latents
         latents = self.proj_out(latents)
         return self.norm_out(latents)
-  
+
+
 class ProjPlusModel(torch.nn.Module):
-    def __init__(self, cross_attention_dim=768, id_embeddings_dim=512, clip_embeddings_dim=1280, num_tokens=4):
+    def __init__(
+        self,
+        cross_attention_dim=768,
+        id_embeddings_dim=512,
+        clip_embeddings_dim=1280,
+        num_tokens=4,
+    ):
         super().__init__()
-        
+
         self.cross_attention_dim = cross_attention_dim
         self.num_tokens = num_tokens
-        
+
         self.proj = torch.nn.Sequential(
-            torch.nn.Linear(id_embeddings_dim, id_embeddings_dim*2),
+            torch.nn.Linear(id_embeddings_dim, id_embeddings_dim * 2),
             torch.nn.GELU(),
-            torch.nn.Linear(id_embeddings_dim*2, cross_attention_dim*num_tokens),
+            torch.nn.Linear(id_embeddings_dim * 2, cross_attention_dim * num_tokens),
         )
         self.norm = torch.nn.LayerNorm(cross_attention_dim)
-        
+
         self.perceiver_resampler = FacePerceiverResampler(
             dim=cross_attention_dim,
             depth=4,
@@ -152,17 +161,13 @@ class ProjPlusModel(torch.nn.Module):
             output_dim=cross_attention_dim,
             ff_mult=4,
         )
-        
+
     def forward(self, id_embeds, clip_embeds, shortcut=False, scale=1.0):
 
         x = self.proj(id_embeds)
         x = x.reshape(-1, self.num_tokens, self.cross_attention_dim)
-        x = self.norm(x) 
+        x = self.norm(x)
         out = self.perceiver_resampler(x, clip_embeds)
         if shortcut:
             out = x + scale * out
         return out
-    
-
-
-
