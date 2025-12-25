@@ -1,92 +1,75 @@
-# BigData-for-DynamicID
 
-### Big Data Analysis Course Project – Thuy Loi University
+# DynamicID: Zero-Shot Multi-ID Image Personalization with Flexible Facial Editability
 
----
+<div align="center">
+    
+### [ICCV 2025]
 
-## 📘 Project Overview
+[Xirui Hu](https://openreview.net/profile?id=~Xirui_Hu1)
 
-**BigData-for-DynamicID** is a **final course project** for the subject **Big Data Analysis** at **Thuy Loi University**, conducted by a group of undergraduate students.
-The project focuses on **large-scale data processing and analysis** in the context of **personalized image generation**, inspired by the research work **DynamicID: Zero-Shot Multi-ID Image Personalization with Flexible Facial Editability (ICCV 2025)**.
 
-This repository is **not an official reimplementation** of the original paper. Instead, it serves as an **academic study and experimental implementation**, aiming to understand how big data techniques are applied in modern generative AI systems.
-
----
-
-## 🎯 Objectives
-
-* Study and analyze the **DynamicID framework** from a big data perspective
-* Explore **large-scale facial image datasets**, preprocessing pipelines, and data organization
-* Implement and experiment with **identity-aware image generation workflows**
-* Demonstrate the role of **data preprocessing, scalability, and reproducibility** in big data systems
+[![arXiv](https://img.shields.io/badge/arXiv-2503.06505-b31b1b.svg)](https://arxiv.org/abs/2503.06505)
+[![GitHub](https://img.shields.io/badge/GitHub-DynamicID-blue?logo=github)](https://github.com/ByteCat-bot/DynamicID)
+</div>
 
 ---
 
-## 🧠 Background: DynamicID
-
-The original **DynamicID** framework proposes a tuning-free approach for both single-ID and multi-ID personalized image generation, enabling:
-
-* Identity preservation using reference images
-* Multi-identity image synthesis
-* Flexible and independent facial expression editing via text prompts
-
-Key components introduced in the original work include:
-
-* **Semantic-Activated Attention (SAA)**
-* **Identity-Motion Reconfigurator (IMR)**
-* A large-scale facial dataset (VariFace-10k)
-
-This project **leverages the ideas and structure** of DynamicID for educational and analytical purposes.
+This is the official implementation of DynamicID, a framework that generates visually harmonious image featuring **multiple individuals**. Each person in the image can be specified through user-provided reference images, and most notably, our method enables **independent control of each individual's facial expression** via text prompts. Hope you have fun with this demo!
 
 ---
 
-## 🧩 Project Scope
+## 🔍 Abstract
 
-In this course project, we focus on:
+Recent advancements in text-to-image generation have spurred interest in personalized human image generation. Although existing methods achieve high-fidelity identity preservation, they often struggle with **limited multi-ID usability** and **inadequate facial editability**. 
 
-* Handling and preprocessing **large image datasets**
-* Analyzing identity-related features in facial data
-* Running training and inference experiments in **Kaggle Notebook environments**
-* Evaluating results from a **big data processing viewpoint**, rather than proposing new algorithms
+We present DynamicID, a tuning-free framework that inherently facilitates both single-ID and multi-ID personalized generation with high fidelity and flexible facial editability. Our key innovations include: 
 
----
+- Semantic-Activated Attention (SAA), which employs query-level activation gating to minimize disruption to the original model when injecting ID features and achieve multi-ID personalization without requiring multi-ID samples during training. 
 
-## ⚙️ Technologies & Tools
+- Identity-Motion Reconfigurator (IMR), which applies feature-space manipulation to effectively disentangle and reconfigure facial motion and identity features, supporting flexible facial editing.
 
-* Python
-* PyTorch
-* Stable Diffusion (v1.5)
-* Kaggle Notebook (GPU-based experimentation)
-* Image preprocessing & data pipeline techniques
+- A task-decoupled training paradigm that reduces data dependency
 
----
+- A curated VariFace-10k facial dataset, comprising 10k unique individuals, each represented by 35 distinct facial images. 
 
-## 📂 Repository Structure
+Experimental results demonstrate that DynamicID outperforms state-of-the-art methods in identity fidelity, facial editability, and multi-ID personalization capability.
 
-```
-bigdata-for-dynamicID/
-├── notebooks/        # Data preprocessing & experiments
-├── data/             # Dataset samples / structure description
-├── results/          # Generated outputs
-├── reports/          # Course report & analysis
-└── README.md
-```
+## 💡 Method
 
----
+<div align="center">
+    <img src="assets/pipeline.jpg", width="1000">
+</div>
 
-## 📌 Academic Disclaimer
+The proposed framework is architected around two core components: SAA and IMR. (a) In the anchoring stage, we jointly optimize the SAA and a face encoder to establish robust single-ID and multi-ID personalized generation capabilities. (b) Subsequently in the reconfiguration stage, we freeze these optimized components and leverage them to train the IMR for flexible and fine-grained facial editing.
 
-This repository is created **solely for educational purposes** as part of a university course project.
-All core ideas, model designs, and methodological contributions belong to the **original DynamicID authors**.
+## 🚀 Checkpoint
 
----
+1. Download the pretrained Stable Diffusion v1.5 checkpoint from [Stable Diffusion v1.5 on Hugging Face](https://huggingface.co/stable-diffusion-v1-5/stable-diffusion-v1-5).
 
-## 🙏 Acknowledgement
+2. Download our SAA-related and IMR-related checkpoints from  [DynamicID Checkpoints on Hugging Face](https://huggingface.co/meteorite2023/DynamicID).
 
-This project is inspired by and based on the official DynamicID research and implementation:
 
-* **Paper**: *DynamicID: Zero-Shot Multi-ID Image Personalization with Flexible Facial Editability* (ICCV 2025)
-* **Official Repository**: [https://github.com/ByteCat-bot/DynamicID](https://github.com/ByteCat-bot/DynamicID)
-* **Authors**: Xirui Hu et al.
+## 🌈 Gallery
 
-We sincerely thank the authors for making their work publicly available.
+<div align="center">
+    <img src="assets/teaser.jpg", width="900">
+    <br><br><br>
+    <img src="assets/single.jpg", width="900">
+    <br><br><br>
+    <img src="assets/multi.jpg", width="900">
+</div>
+
+## 📌 ToDo List
+
+- [x] Release technical report
+- [x] Release **training and inference code**
+- [x] Release **Dynamic-sd** (based on *stable diffusion v1.5*)  
+- [ ] Release **Dynamic-flux** (based on *Flux-dev*)
+- [ ] Release a Hugging Face Demo Space
+
+## 📖 Citation
+If you are inspired by our work, please cite our paper.
+
+
+
+
